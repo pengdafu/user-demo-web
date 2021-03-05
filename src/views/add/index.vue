@@ -32,7 +32,7 @@ import axios from 'axios'
       };
       var validateUserId = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('请输入用户Id'));
+          return callback(new Error('请输入用户Id'));
         } else {
           if (this.params.nickName !== '') {
             this.$refs.params.validateField('nickName');
@@ -42,7 +42,7 @@ import axios from 'axios'
       };
       var validateNickName = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('请输入用户昵称'));
+          return callback(new Error('请输入用户昵称'));
         } else {
           callback();
         }
@@ -68,17 +68,15 @@ import axios from 'axios'
     },
     methods: {
       submitForm(formName) {
-        var count = 0
         this.$refs[formName].validate((valid) => {
-          count++
           if (!valid) {
             console.log('error submit!!');
             return false;
           }
           
         });
-        if (count) {
-          return false
+        if (!this.params.nickName || !this.params.userId || !this.params.role) {
+          return
         }
         this.params.role = Number(this.params.role)
         axios.post("/v1/user/", this.params, { headers: { "Content-Type": "application/json" } }).then(({ status, data }) => {
