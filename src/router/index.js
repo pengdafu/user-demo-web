@@ -62,7 +62,7 @@ export const constantRoutes = [
         path: 'index',
         name: 'AddUser',
         component: () => import('@/views/add/index'),
-        meta: { title: '添加用户', icon: 'link' }
+        meta: { title: '添加用户', icon: 'el-icon-circle-plus-outline' }
       }
     ]
   },
